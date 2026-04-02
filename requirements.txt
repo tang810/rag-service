@@ -1,0 +1,22 @@
+# Generated from code import scan on 2026-03-20
+# Core API
+fastapi
+uvicorn
+pydantic
+
+# HTTP clients
+aiohttp
+requests
+
+# Database
+asyncpg
+SQLAlchemy
+pgvector
+
+# Config & parsing
+python-dotenv
+PyYAML
+
+# PDF/Markdown parser client used by src/clients/MinerUParser.py
+mineru==2.1.1
+pypdf

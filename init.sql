@@ -1,0 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+CREATE TABLE IF NOT EXISTS documents (id SERIAL PRIMARY KEY, doc_id TEXT UNIQUE NOT NULL, title TEXT, authors TEXT, keywords TEXT[], journal_conference TEXT, source_url TEXT, source_type TEXT, publish_year INTEGER, abstract TEXT, doc_type TEXT, create_time TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS chunks (id SERIAL PRIMARY KEY, chunk_id TEXT UNIQUE NOT NULL, doc_id TEXT NOT NULL REFERENCES documents(doc_id), content TEXT NOT NULL, page INTEGER, section_path JSONB, chunk_index INTEGER, create_time TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS embeddings (id SERIAL PRIMARY KEY, chunk_id TEXT UNIQUE NOT NULL REFERENCES chunks(chunk_id), doc_id TEXT NOT NULL REFERENCES documents(doc_id), embedding vector(1024) NOT NULL, create_time TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS search_logs (id SERIAL PRIMARY KEY, query_text TEXT NOT NULL, query_hash TEXT, search_type TEXT, processing_time_ms INTEGER, results_count INTEGER, top_k INTEGER, embedding_time_ms INTEGER, vector_search_time_ms INTEGER, rerank_time_ms INTEGER, create_time TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS formulas (id TEXT PRIMARY KEY, doc_id TEXT NOT NULL, name_zh TEXT, expr TEXT, extractid TEXT, category TEXT, page INTEGER);
+CREATE TABLE IF NOT EXISTS physical_quantities (id TEXT PRIMARY KEY, doc_id TEXT NOT NULL, symbol TEXT, symbol_latex TEXT, name_zh TEXT, unit TEXT, page INTEGER);
